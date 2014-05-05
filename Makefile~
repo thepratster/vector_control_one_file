@@ -19,14 +19,14 @@ TOVHDL:TOVC vc2vhdl
 LLVM2AAOPTS=
 
 # the top-level module.
-TOPMODULES=-t vector_control_daemon
+TOPMODULES=-T vector_control_daemon
 
 
 # compile with SW defined.
 SW: $(SRC)/prog.c $(SRC)/testbench.c 
 	gcc -g -c -DSW $(PROGDEFS) -I$(PIPEHANDLER_INCLUDE) -I$(SRC) $(SRC)/prog.c
-	gcc -g -c -DSW $(PROGDEFS) -I$(PIPEHANDLER_INCLUDE) -I$(PTHREADUTILS_INCLUDE) -I$(SRC) $(SRC)/testbench.c
-	gcc -g -o testbench_sw prog.o testbench.o -L$(PIPEHANDLER_LIB) -lPipeHandler -lpthread
+	gcc -g -c -DSW $(PROGDEFS) -I$(PIPEHANDLER_INCLUDE) -I$(PTHREADUTILS_INCLUDE) -I$(SRC) $(SRC)/testbench.c 
+	gcc -g -o testbench_sw prog.o testbench.o -L$(PIPEHANDLER_LIB) -lPipeHandler -lpthread -lm
 
 # five steps from C to vhdl simulator.
 HW: c2llvmbc llvmbc2aa  aa2vc  vc2vhdl  vhdlsim
